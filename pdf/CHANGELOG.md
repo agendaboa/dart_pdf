@@ -1,5 +1,34 @@
 # Changelog
 
+## 3.10.5
+
+- Improve TTF writer with multi-compound characters
+- Partially revert underline on spans changes
+
+## 3.10.4
+
+- Fix Deprecation warning message
+- TableHelper data accepts Widgets as child
+- Add RTL support on TableHelper
+
+## 3.10.3
+
+- Set xml 6.3.0 as minimum dependency
+
+## 3.10.2
+
+- Fix Type1 font widths
+- Deprecate PdfArrayObject and PdfObjectDict
+- Improve PdfArray and PdfDict constructors
+- Fix underline on spans [RomanIvn]
+- Improve verbose output
+- Allow saving an unmodified document
+- Table cell: dynamic widget [Shahriyar Aghajani]
+- Move Table.fromTextArray to TableHelper.fromTextArray
+- Fix PdfImage constructor without alpha channel [Tomasz Gucio]
+- image.fromBytes() pass bytes offset [Aravindhan K]
+- Update xml dependency and deprecated getter
+
 ## 3.10.1
 
 - Fix web debug build
