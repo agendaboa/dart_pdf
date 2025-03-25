@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.14.2
+
+- Fix wasm dart.pub warning
+
+## 5.14.0
+
+- Replace WebView with WKWebView on macOS
+- Upgrade archive [CodeDoctor]
+- Fix wasm import [CodeDoctor]
+
 ## 5.13.4
 
 - Improve Web Browser detection logic
