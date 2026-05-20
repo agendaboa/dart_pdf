@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Fix lint issues
+- Add Swift Package Manager support
+
+## 5.14.3
+
+- Update according to breaking changes in the new AssetManifest API [Pierre Fellendael]
+
 ## 5.14.2
 
 - Fix wasm dart.pub warning

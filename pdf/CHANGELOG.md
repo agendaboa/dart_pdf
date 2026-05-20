@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+- Fix lint issues
+
+## 3.12.0
+
+- Imroved assertion readability [tmbenhura]
+- Dropped unachievable assertion check [tmbenhura]
+- Correctly calculating bounding boxes from children [tmbenhura]
+- Update pdfa README.md [pldelattre]
+- Improve pdfa attached files logic [pldelattre]
+- Adds Multipage and Inseparable documentation [Ortes]
+- import formxobject [gs]
+- Subclasses of PdfFormXObject for drawing widgets and SVG [gs]
+- new Method drawXObject [gs]
+- feat: add CMYK and Adobe APP14 JPEG support [Michael Ryan]
+- fix: handle compound glyph offset calculation and null sub-glyph index [illia-romanenko]
+- Improve performance of table layout [Pieter van Loon]
+- Reduce freezes on web [Kostia Sokolovskyi]
+- creates catalog.names earlier for attached files [ilaurillard]
+- fix: Prevent "Index out of range" error when reading simple glyphs in certain fonts  [Eghosa Osayande]
+- Improve PdfRect naming consistency
+- Migrate to vector_math 2.2.0
+
 ## 3.11.3
 
 - Fix CMYK
