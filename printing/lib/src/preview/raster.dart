@@ -85,9 +85,9 @@ mixin PdfPreviewRaster on State<PdfPreviewCustom> {
         }
         dpi =
             (min(mq.size.width - 16, widget.maxPageWidth ?? double.infinity)) *
-            dpr /
-            pageFormat.width *
-            PdfPageFormat.inch;
+                dpr /
+                pageFormat.width *
+                PdfPageFormat.inch;
       }
 
       _raster();
@@ -197,7 +197,8 @@ mixin PdfPreviewRaster on State<PdfPreviewCustom> {
           pages[index].image.evict();
         }
         if (pageNum >= 0 && pageNum <= pages.length) {
-        pages.removeRange(pageNum, pages.length);
+          pages.removeRange(pageNum, pages.length);
+        }
       }
       if (mounted) {
         setState(() {});
