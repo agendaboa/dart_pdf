@@ -35,7 +35,7 @@ class SvgParser {
         : splitDoubles(vbattr);
 
     if (vb.isEmpty || vb.length > 4) {
-      throw Exception('viewBox must contain 1..4 parameters');
+      throw PdfException('ViewBox must contain 1..4 parameters');
     }
 
     final fvb = [...List<double>.filled(4 - vb.length, 0), ...vb];
@@ -83,7 +83,7 @@ class SvgParser {
     String? namespace,
     double? defaultValue = 0,
   }) {
-    final attr = xml.getAttribute(name, namespace: namespace);
+    final attr = xml.getAttribute(name, namespaceUri: namespace);
 
     if (attr == null) {
       return defaultValue;
@@ -99,7 +99,7 @@ class SvgParser {
     String? namespace,
     double? defaultValue,
   }) {
-    final attr = xml.getAttribute(name, namespace: namespace);
+    final attr = xml.getAttribute(name, namespaceUri: namespace);
 
     if (attr == null) {
       return defaultValue == null ? null : SvgNumeric.value(defaultValue, null);
@@ -194,7 +194,7 @@ class SvgNumeric {
       case SvgUnit.direct:
         return value / 255.0;
       default:
-        throw Exception('Invalid color value $value ($unit)');
+        throw PdfException('Invalid color value $value ($unit)');
     }
   }
 

@@ -138,7 +138,7 @@ class Partitions extends Widget with SpanningWidget {
       if (child.flex > 0) {
         assert(() {
           if (!canFlex) {
-            throw Exception(
+            throw PdfException(
               'Partition children have non-zero flex but incoming width constraints are unbounded.',
             );
           } else {

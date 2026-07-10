@@ -93,7 +93,9 @@ class MemoryImage extends ImageProvider {
   }) {
     final decoder = im.findDecoderForData(bytes);
     if (decoder == null) {
-      throw Exception('Unable to guess the image type ${bytes.length} bytes');
+      throw PdfException(
+        'Unable to guess the image type ${bytes.length} bytes',
+      );
     }
 
     if (decoder is im.JpegDecoder) {
@@ -111,7 +113,7 @@ class MemoryImage extends ImageProvider {
     final info = decoder.startDecode(bytes);
 
     if (info == null) {
-      throw Exception('Unable decode the image');
+      throw PdfException('Unable decode the image');
     }
 
     return MemoryImage._(
@@ -143,7 +145,7 @@ class MemoryImage extends ImageProvider {
     final image = im.decodeImage(bytes);
 
     if (image == null) {
-      throw Exception('Unable decode the image');
+      throw PdfException('Unable decode the image');
     }
 
     final resized = im.copyResize(image, width: width);

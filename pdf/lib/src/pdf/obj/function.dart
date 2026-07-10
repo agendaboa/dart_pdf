@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import '../../base/exceptions.dart';
 import '../color.dart';
 import '../document.dart';
 import '../format/array.dart';
@@ -52,7 +53,7 @@ abstract class PdfBaseFunction extends PdfObject<PdfDict> {
     }
 
     if (_stops.length != _colors.length) {
-      throw Exception(
+      throw PdfException(
         'The number of colors in a gradient must match the number of stops',
       );
     }

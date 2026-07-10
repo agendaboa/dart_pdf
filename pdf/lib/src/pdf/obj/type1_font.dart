@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import '../../base/exceptions.dart';
 import '../../priv.dart';
 import '../document.dart';
 import '../font/font_metrics.dart';
@@ -108,7 +109,7 @@ class PdfType1Font extends PdfFont {
   @override
   PdfFontMetrics glyphMetrics(int charCode) {
     if (!isRuneSupported(charCode)) {
-      throw Exception(
+      throw PdfException(
         'Unable to display U+${charCode.toRadixString(16)} with $fontName',
       );
     }

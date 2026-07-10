@@ -84,7 +84,8 @@ public class PrintJob: UIPrintPageRenderer, UIPrintInteractionControllerDelegate
             controller.delegate = self
 
             let printInfo = UIPrintInfo.printInfo()
-            printInfo.jobName = jobName!
+            let strippedJobName = jobName!.hasSuffix(".pdf") ? String(jobName!.dropLast(4)) : jobName!
+            printInfo.jobName = strippedJobName
             printInfo.outputType = .general
             if orientation != nil {
                 printInfo.orientation = orientation!
@@ -185,7 +186,8 @@ public class PrintJob: UIPrintPageRenderer, UIPrintInteractionControllerDelegate
             orientation = UIPrintInfo.Orientation.landscape
         }
 
-        jobName = name
+        // Strip .pdf extension as UIPrintInteractionController appends it automatically
+        jobName = name.hasSuffix(".pdf") ? String(name.dropLast(4)) : name
         printerName = printerID
 
         let controller = UIPrintInteractionController.shared
@@ -340,8 +342,15 @@ public class PrintJob: UIPrintPageRenderer, UIPrintInteractionControllerDelegate
             }
 
             let printer = printerPickerController.selectedPrinter!
+            // UIPrinter.url is non-optional in Swift but the underlying ObjC NSURL can be
+            // nil for partially resolved printers (e.g. discovered over a personal hotspot);
+            // force-bridging a nil NSURL to URL traps at runtime. Read it via KVC instead.
+            guard let url = printer.value(forKey: "URL") as? URL else {
+                result(nil)
+                return
+            }
             let data: NSDictionary = [
-                "url": printer.url.absoluteString as Any,
+                "url": url.absoluteString as Any,
                 "name": printer.displayName as Any,
                 "model": printer.makeAndModel as Any,
                 "location": printer.displayLocation as Any,

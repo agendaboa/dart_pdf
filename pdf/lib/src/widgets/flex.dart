@@ -240,7 +240,7 @@ class Flex extends MultiChildWidget with SpanningWidget {
           final dimension = direction == Axis.horizontal ? 'width' : 'height';
           if (!canFlex &&
               (mainAxisSize == MainAxisSize.max || fit == FlexFit.tight)) {
-            throw Exception(
+            throw PdfException(
               'Flex children have non-zero flex but incoming $dimension constraints are unbounded.',
             );
           } else {

@@ -78,7 +78,10 @@ class SvgImg extends SvgOperation {
 
     final hrefAttr =
         element.getAttribute('href') ??
-        element.getAttribute('href', namespace: 'http://www.w3.org/1999/xlink');
+        element.getAttribute(
+          'href',
+          namespaceUri: 'http://www.w3.org/1999/xlink',
+        );
 
     if (hrefAttr != null) {
       if (hrefAttr.startsWith('data:')) {

@@ -73,7 +73,10 @@ class SvgUse extends SvgOperation {
     SvgOperation? href;
     final hrefAttr =
         element.getAttribute('href') ??
-        element.getAttribute('href', namespace: 'http://www.w3.org/1999/xlink');
+        element.getAttribute(
+          'href',
+          namespaceUri: 'http://www.w3.org/1999/xlink',
+        );
 
     if (hrefAttr != null) {
       final hrefElement = painter.parser.findById(hrefAttr.substring(1));

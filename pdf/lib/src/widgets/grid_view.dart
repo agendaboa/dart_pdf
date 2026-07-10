@@ -123,7 +123,7 @@ class GridView extends MultiChildWidget with SpanningWidget {
       );
 
       if (_context.childCrossAxis!.isInfinite) {
-        throw Exception(
+        throw PdfException(
           'Unable to calculate child height as the height constraint is infinite.',
         );
       }

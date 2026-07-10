@@ -292,8 +292,9 @@ class MultiPage extends Page {
       assert(() {
         // Detect too big widgets
         if (sameCount++ > maxPages) {
-          throw TooManyPagesException(
-            'This widget created more than $maxPages pages. This may be an issue in the widget or the document. See https://pub.dev/documentation/pdf/latest/widgets/MultiPage-class.html',
+          throw PdfTooBigPageException(
+            'This widget created more than $maxPages pages. This may be an issue in the widget or '
+            'the document. See https://pub.dev/documentation/pdf/latest/widgets/MultiPage-class.html',
           );
         }
         return true;
@@ -382,7 +383,7 @@ class MultiPage extends Page {
 
         // Else we crash if the widget is too big and cannot be separated
         if (!canSpan) {
-          throw Exception(
+          throw PdfException(
             'Widget won\'t fit into the page as its height (${child.box!.height}) '
             'exceed a page height (${pageHeight - pageHeightMargin}). '
             'You probably need a SpanningWidget or use a single page layout',
@@ -674,11 +675,4 @@ class MultiPage extends Page {
       }
     }
   }
-}
-
-/// Exception thrown when generator populates more pages than [maxPages].
-class TooManyPagesException implements Exception {
-  TooManyPagesException(this.message);
-
-  final String message;
 }
