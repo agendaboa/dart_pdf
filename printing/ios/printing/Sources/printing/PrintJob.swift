@@ -282,8 +282,14 @@ public class PrintJob: UIPrintPageRenderer, UIPrintInteractionControllerDelegate
             return
         }
 
-        let activityViewController = UIActivityViewController(activityItems: [fileURL, body as Any], applicationActivities: nil)
-        activityViewController.setValue(subject, forKey: "subject")
+        var items: [Any] = [fileURL]
+        if let body, !body.isEmpty {
+            items.append(body)
+        }
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        if let subject, !subject.isEmpty {
+            activityViewController.setValue(subject, forKey: "subject")
+        }
         if UIDevice.current.userInterfaceIdiom == .pad {
             let controller: UIViewController? = PrintJob.sceneKeyWindow()?.rootViewController
             activityViewController.popoverPresentationController?.sourceView = controller?.view
