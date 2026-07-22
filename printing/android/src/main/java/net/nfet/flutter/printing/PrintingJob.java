@@ -341,10 +341,19 @@ public class PrintingJob extends PrintDocumentAdapter {
             shareIntent.setType("application/pdf");
             shareIntent.putExtra(Intent.EXTRA_STREAM, apkURI);
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, body);
-            shareIntent.putExtra(
-                    Intent.EXTRA_EMAIL, emails != null ? emails.toArray(new String[0]) : null);
+
+            if (subject != null && !subject.isEmpty()) {
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            }
+
+            if (body != null && !body.isEmpty()) {
+                shareIntent.putExtra(Intent.EXTRA_TEXT, body);
+            }
+
+            if (emails != null && !emails.isEmpty()) {
+                shareIntent.putExtra(Intent.EXTRA_EMAIL, emails.toArray(new String[0]));
+            }
+
             Intent chooserIntent = Intent.createChooser(shareIntent, null);
             List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(
                     chooserIntent, PackageManager.MATCH_DEFAULT_ONLY);
