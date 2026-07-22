@@ -18,10 +18,6 @@ import FlutterMacOS
 import Foundation
 import WebKit
 
-func dataProviderReleaseDataCallback(info _: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size _: Int) {
-    data.deallocate()
-}
-
 public class PrintJob: NSView, NSSharingServicePickerDelegate {
     private var printing: PrintingPlugin
     public var index: Int
@@ -53,7 +49,7 @@ public class PrintJob: NSView, NSSharingServicePickerDelegate {
             last.marginRight != new.marginRight || last.marginBottom != new.marginBottom
     }
 
-    // Return the number of pages available for printing
+    /// Return the number of pages available for printing
     override public func knowsPageRange(_ range: NSRangePointer) -> Bool {
         let size = printOperation!.showsPrintPanel ? printOperation!.printPanel.printInfo.paperSize : printOperation!.printInfo.paperSize
 
@@ -107,7 +103,7 @@ public class PrintJob: NSView, NSSharingServicePickerDelegate {
         return true
     }
 
-    // Return the drawing rectangle for a particular page number
+    /// Return the drawing rectangle for a particular page number
     override public func rectForPage(_ page: Int) -> NSRect {
         self.page = pdfDocument?.page(at: page)
         return self.page?.getBoxRect(CGPDFBox.mediaBox) ?? NSZeroRect
@@ -118,14 +114,22 @@ public class PrintJob: NSView, NSSharingServicePickerDelegate {
     }
 
     func setDocument(_ data: Data?) {
-        let bytesPointer = UnsafeMutablePointer<UInt8>.allocate(capacity: data?.count ?? 0)
-        data?.copyBytes(to: bytesPointer, count: data?.count ?? 0)
-        let dataProvider = CGDataProvider(dataInfo: nil, data: bytesPointer, size: data?.count ?? 0, releaseData: dataProviderReleaseDataCallback)
-        pdfDocument = CGPDFDocument(dataProvider!)
+        // An empty or malformed document must not crash: CGDataProvider returns
+        // nil for empty data, and CGPDFDocument returns nil for invalid data.
+        if let data, !data.isEmpty, let dataProvider = CGDataProvider(data: data as CFData) {
+            pdfDocument = CGPDFDocument(dataProvider)
+        } else {
+            pdfDocument = nil
+        }
 
         if dynamic {
             // Signal that document is ready
             documentReceived = true
+            return
+        }
+
+        if pdfDocument == nil {
+            printing.onCompleted(printJob: self, completed: false, error: "Unable to load the PDF document")
             return
         }
 
@@ -338,7 +342,7 @@ public class PrintJob: NSView, NSSharingServicePickerDelegate {
         if #available(macOS 11.0, *) {
             html = true
         }
-        let data: NSDictionary = [
+        return [
             "directPrint": true,
             "dynamicLayout": true,
             "canPrint": true,
@@ -347,6 +351,5 @@ public class PrintJob: NSView, NSSharingServicePickerDelegate {
             "canRaster": true,
             "canListPrinters": true,
         ]
-        return data
     }
 }
